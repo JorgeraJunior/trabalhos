@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <string.h>
+#include <stdlib.h>
+#include <locale.h>
+#include <ctime>
+#include <ctype.h>
+struct carro
+{
+    char marcaVeiculo[20];
+    char modelo[20];
+    char anoFabricacao[20];
+    char placa[20];
+    int vazio,cod;
+
+}log[150];
+int verifica_pos(void);
+void ListarVeiculos();
+int verifica_cod( int cod );
+void ListarVeiculoAno();
+void ListarVeiculoData();
+void ListarVeiculoModelo();
+void cadastroCarros(int cod,int pos);
+void consultaCod (void);
+int main(void){
+
+	setlocale(LC_ALL,"");
+
+    int i,escolha,posicao,retorno;
+    int codaux;
+    do
+    {	
+    	printf("Selecione uma opção:\n");
+        printf("1 - Cadastrar Carro\n2 - Listar Carros\n3 - Listar veiculos filtrando por ano\n4 - Listar veiculos filtrando por data\n6 - Listar veiculos pelo modelo\n");
+        scanf("%d", &escolha);
+        getchar();
+        if (escolha == 1)
+        {
+        	printf("Prencha os campos:\n");
+            posicao=verifica_pos();
+			cadastroCarros( codaux, posicao );
+        }
+        else if (escolha == 2)
+        {
+		ListarVeiculos();
+		}
+        else if (escolha == 3)
+        {
+        ListarVeiculoAno();
+        }
+        else if (escolha == 4)
+        {
+        ListarVeiculoData();
+        }
+        else if (escolha == 5)
+        {
+		ListarVeiculoModelo();
+        }
+        else{
+            printf("Opção selecionada inválido, selecione outra opção:");
+            getchar();
+            system("cls");
+        }
+        }    while (escolha != 8 || escolha < 8);
+
+}
+void ListarVeiculos(){
+    int i;
+    for(i=0;i<5;i++){
+    	if(log[i].marcaVeiculo != ""){
+            printf("\nMarca: %s\nModelo: %s\nAno: %s\nPlaca: %s\n\n",log[i].marcaVeiculo,log[i].modelo,log[i].anoFabricacao,log[i].placa);
+        }
+	}
+    printf("Pressione ENTER para voltar ao menu principal");
+    getchar();
+    system("cls");
+
+
+}
+void ListarVeiculoAno(){
+    int i,j;
+    for(i=1; i<20; i++){
+        for(j=i+1;j<20;j++){
+	        if(strcoll(log[i].anoFabricacao , log[j].anoFabricacao) > 0 ){
+                log[0]=log[i];
+                log[i]=log[j];
+                log[j]=log[0];
+	        }
+        }
+	}
+	for(i=1;i<20;i++){
+		if(log[i].cod!=NULL){
+        printf("Ano Fabricação: %s\n",log[j].anoFabricacao);
+    }
+	}
+
+}
+void ListarVeiculoData(){
+    int i,j;
+    for(i=1;i<20;i++){
+        for(j=i+1;j<20;j++){
+	        if(strcoll(log[i].anoFabricacao , log[j].anoFabricacao) > 0 ){
+                log[0]=log[i];
+                log[i]=log[j];
+                log[j]=log[0];
+	        }
+        }
+	}
+	for(i=1;i<20;i++){
+		if(log[i].cod!=NULL){
+        printf("Ano Fabricação: %s\n",log[j].anoFabricacao);
+    }
+	}
+
+}
+void ListarVeiculoModelo(){
+    int i,j;
+    for(i=1;i<20;i++){
+        for(j=i+1;j<20;j++){
+	        if(strcoll(log[i].modelo , log[j].modelo) > 0 ){
+                log[0]=log[i];
+                log[i]=log[j];
+                log[j]=log[0];
+	        }
+        }
+	}
+	for(i=1;i<20;i++){
+		if(log[i].cod!=NULL){
+        printf("Modelo: %s\n",log[j].modelo);
+    }
+	}
+
+}
+void cadastroCarros(int cod, int pos){
+    int i, op;
+    do{
+    pos = verifica_pos();
+    log[pos].cod = cod;
+        printf("\nMarca do veículo: ");
+        gets(log[pos].marcaVeiculo);
+        printf("\nModelo: ");
+        gets(log[pos].modelo);
+        printf("\nAno de fabricação: ");
+        gets(log[pos].anoFabricacao);
+        printf("\nPlaca: ");
+        gets(log[pos].placa);
+        op == 1;
+        getchar();
+    }while(op == 1);
+    system("cls");
+    main();
+
+}
+int verifica_pos( void ){
+    int cont = 0;
+    while ( cont <= 200 )
+    {
+        if ( log[cont].vazio == 0 )
+            return(cont);
+        cont++;
+    }
+    return(-1);
+}
